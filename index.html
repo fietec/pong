@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Launcher</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #121212;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .settings-card {
+            background: #1e1e1e;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+            width: 320px;
+            text-align: center;
+        }
+
+        h1 { margin-bottom: 1.5rem; color: #ff4444; letter-spacing: 2px; }
+
+        .field { margin-bottom: 1.2rem; text-align: left; }
+        
+        label { display: block; font-size: 0.8rem; color: #aaa; margin-bottom: 5px; }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .play-btn {
+            width: 100%;
+            margin-top: 1.5rem;
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .play-btn:hover { background: #ff6666; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <div class="settings-card">
+        <h1>PONG</h1>
+        
+        <div class="field">
+            <label>Winning Score</label>
+            <input type="number" id="score" value="5" min="1">
+        </div>
+
+        <div class="field">
+            <label>Paddle Speed (100-1000)</label>
+            <input type="number" id="speed" value="500" step="50">
+        </div>
+
+        <label class="checkbox-group">
+            <input type="checkbox" id="singleplayer"> Singleplayer (AI)
+        </label>
+
+        <button class="play-btn" onclick="start()">PLAY GAME</button>
+    </div>
+
+    <script>
+        function start() {
+            const score = document.getElementById('score').value;
+            const speed = document.getElementById('speed').value;
+            const single = document.getElementById('singleplayer').checked;
+
+            // Construct the URL
+            let params = new URLSearchParams();
+            params.append('max-score', score);
+            params.append('player-speed', speed);
+            if (single) params.append('singleplayer', 'true');
+
+            // Redirect to your raylib game page
+            window.location.href = `game.html?${params.toString()}`;
+        }
+    </script>
+</body>
+</html>
