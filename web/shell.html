@@ -178,7 +178,7 @@ jwE50AGjLCVuS8Yt4H7OgZLKK5EKOsLviEWJSL/+0uMi7gLUSBseYwqEbXvSHCec1CJvZPyHCmYQffaB
         <div class="emscripten" id="status">Downloading...</div>
 
         <span id='controls'>
-		  <span><input type="button" value="Settings" onclick="location.href='../'"</span>
+		  <span><input type="button" value="Settings" onclick="location.href='./index.html'"</span>
           <span><input type="button" value="📜 SOURCE CODE" onclick="location.href='https://github.com/fietec/pong';"/></span>
           <span><input type="button" value="🖵 FULLSCREEN" onclick="Module.canvas.requestFullscreen()"></span>
           <span><input type="button" id="btn-audio" value="🔇 MUTE" onclick="toggleAudio()"></span>
@@ -221,24 +221,25 @@ jwE50AGjLCVuS8Yt4H7OgZLKK5EKOsLviEWJSL/+0uMi7gLUSBseYwqEbXvSHCec1CJvZPyHCmYQffaB
 	  var urlParams = new URLSearchParams(window.location.search);
 	  var args = [];
 
-	  // Map your URL params to CLI flags
 	  if (urlParams.has('max-score')) {
-		  args.push('-m');
+		  args.push('-s');
 		  args.push(urlParams.get('max-score'));
 	  }
 	  if (urlParams.has('player-speed')) {
 		  args.push('-p');
 		  args.push(urlParams.get('player-speed'));
 	  }
-	  if (urlParams.has('singleplayer')) {
-		  args.push('-s');
+	  if (urlParams.has('mode')) {
+		  args.push('-m');
+		  args.push(urlParams.get('mode'));
 	  }
+	  console.log(args);
       var Module = {
 		  arguments: args,
             preRun: [],
             postRun: [],
             print: (function() {
-                var element = document.querySelector('#output');
+	            var element = document.querySelector('#output');
 
                 if (element) element.value = '';    // Clear browser cache
 

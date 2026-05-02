@@ -263,6 +263,7 @@ typedef uint64_t clags_time_t;
     X(Clags_Custom, clags_verify_custom,  "custom",  void*           ) /* custom type, defined via custom verification function             */ \
     X(Clags_Bool,   clags_verify_bool,    "bool",    bool            ) /* boolean value                                                     */ \
     X(Clags_Number, clags_verify_number,  "number",  int64_t         ) /* a signed integer within user-defined limits                       */ \
+    X(Clags_SizeT,  clags_verify_size_t,  "size_t",  size_t          ) /* unsigned size_t integer                                           */ \
     X(Clags_Int8,   clags_verify_int8,    "int8",    int8_t          ) /* signed 8-bit integer                                              */ \
     X(Clags_UInt8,  clags_verify_uint8,   "uint8",   uint8_t         ) /* unsigned 8-bit integer                                            */ \
     X(Clags_Int32,  clags_verify_int32,   "int32",   int32_t         ) /* signed 32-bit integer                                             */ \
@@ -783,6 +784,7 @@ clags_verify_func_def_t clags_verify_custom;
 clags_verify_func_def_t clags_verify_subcmd;
 clags_verify_func_def_t clags_verify_bool;
 clags_verify_func_def_t clags_verify_number;
+clags_verify_func_def_t clags_verify_size_t;
 clags_verify_func_def_t clags_verify_int8;
 clags_verify_func_def_t clags_verify_uint8;
 clags_verify_func_def_t clags_verify_int32;
@@ -1020,6 +1022,26 @@ bool clags_verify_number(clags_config_t *config, const char *arg_name, const cha
     }
 
     if (pvalue) *(int64_t*)pvalue = (int64_t)value;
+    return true;
+}
+
+bool clags_verify_size_t(clags_config_t *config, const char *arg_name, const char *arg, void *pvalue, void *data)
+{
+    (void) data;
+    char *endptr;
+    errno = 0;
+    unsigned long long value = strtoull(arg, &endptr, 0);
+
+    if (*endptr != '\0') {
+        clags_log(config, Clags_Error, "Invalid size_t value for argument '%s': '%s'!", arg_name, arg);
+        return false;
+    }
+    if (errno == ERANGE || value > SIZE_MAX || *arg == '-') {
+        clags_log(config, Clags_Error, "uint64 out of range [0-%zu] for argument '%s': '%s'!", SIZE_MAX, arg_name, arg);
+        return false;
+    }
+
+    if (pvalue) *(size_t*)pvalue = (size_t)value;
     return true;
 }
 
