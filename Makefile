@@ -1,3 +1,5 @@
+.PHONY: web clean
+
 TARGET = pong
 SRCS = src/pong.c
 CC = cc
