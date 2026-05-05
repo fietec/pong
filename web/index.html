@@ -67,40 +67,98 @@
     <div class="settings-card">
         <h1>PONG</h1>
         
-        <div class="field">
-            <label>Game Mode</label>
-            <select id="mode">
-                <option value="single">Singleplayer (Wall)</option>
-                <option value="computer">VS Computer (AI)</option>
-                <option value="multi">Multiplayer (Local)</option>
-            </select>
-        </div>
+        <!-- <div class="field"> -->
+        <!--     <label>Game Mode</label> -->
+        <!--     <select id="mode"> -->
+        <!--         <option value="single">Singleplayer (Wall)</option> -->
+        <!--         <option value="computer">VS Computer (AI)</option> -->
+        <!--         <option value="multi">Multiplayer (Local)</option> -->
+        <!--     </select> -->
+        <!-- </div> -->
+		<!-- Game Mode -->
+		<div class="field">
+		  <label>Game Mode (single, computer, multi)</label>
+		  <select id="mode">
+			<option value="single" selected>Singleplayer</option>
+			<option value="computer">Computer</option>
+			<option value="multi">Multiplayer</option>
+		  </select>
+		</div>
 
-        <div class="field">
-            <label>Winning Score (0 for infinite)</label>
-            <input type="number" id="score" value="0" min="0">
-        </div>
+		<!-- Winning Score -->
+		<div class="field">
+		  <label>Winning Score (0 for infinite)</label>
+		  <input type="number" id="max-score" value="0" min="0">
+		</div>
 
-        <div class="field">
-            <label>Paddle Speed (100-1000)</label>
-            <input type="number" id="speed" value="500" step="50">
-        </div>
+		<!-- Player Speed -->
+		<div class="field">
+		  <label>Player Speed (100.0-2000.0)</label>
+		  <input type="number" id="player-speed" value="500" min="100" max="2000" step="10">
+		</div>
 
+		<!-- Player Speedup -->
+		<div class="field">
+		  <label>Player Speedup Factor (0.0-2.0)</label>
+		  <input type="number" id="player-speedup" value="1" min="0" max="2" step="0.01">
+		</div>
+
+		<!-- Player Max Speed -->
+		<div class="field">
+		  <label>Player Max Speed (100.0-2000.0)</label>
+		  <input type="number" id="player-max-speed" value="1000" min="100" max="2000" step="10">
+		</div>
+
+		<!-- Player Slippiness -->
+		<div class="field">
+		  <label>Player Slippiness (100.0-2000.0)</label>
+		  <input type="number" id="player-slippiness" value="500" min="100" max="2000" step="10">
+		</div>
+
+		<!-- Ball Speed -->
+		<div class="field">
+		  <label>Initial Ball Speed (100.0-2400.0)</label>
+		  <input type="number" id="ball-speed" value="800" min="100" max="2400" step="10">
+		</div>
+
+		<!-- Ball Speedup -->
+		<div class="field">
+		  <label>Ball Speedup Factor (0.0-2.0)</label>
+		  <input type="number" id="ball-speedup" value="1.05" min="0" max="2" step="0.01">
+		</div>
+
+		<!-- Ball Max Speed -->
+		<div class="field">
+		  <label>Maximum Ball Speed (100.0-2400.0)</label>
+		  <input type="number" id="ball-max-speed" value="1200" min="100" max="2400" step="10">
+		</div>
         <button class="play-btn" onclick="start()">PLAY GAME</button>
     </div>
 
     <script>
-        function start() {
-            const mode = document.getElementById('mode').value;
-            const score = document.getElementById('score').value;
-            const speed = document.getElementById('speed').value;
+      function start() {
+		  const mode = document.getElementById('mode').value;
+		  const score = document.getElementById('max-score').value;
+		  const playerSpeed = document.getElementById('player-speed').value;
+		  const playerSpeedup = document.getElementById('player-speedup').value;
+		  const playerMaxSpeed = document.getElementById('player-max-speed').value;
+		  const playerSlippiness = document.getElementById('player-slippiness').value;
+		  const ballSpeed = document.getElementById('ball-speed').value;
+		  const ballSpeedup = document.getElementById('ball-speedup').value;
+		  const ballMaxSpeed = document.getElementById('ball-max-speed').value;
 
-            let params = new URLSearchParams();
-            params.append('mode', mode);
-            params.append('max-score', score);
-            params.append('player-speed', speed);
+		  let params = new URLSearchParams();
+		  params.append('mode', mode);
+		  params.append('max-score', score);
+		  params.append('player-speed', playerSpeed);
+		  params.append('player-speedup', playerSpeedup);
+		  params.append('player-max-speed', playerMaxSpeed);
+		  params.append('player-slippiness', playerSlippiness);
+		  params.append('ball-speed', ballSpeed);
+		  params.append('ball-speedup', ballSpeedup);
+		  params.append('ball-max-speed', ballMaxSpeed);
 
-            window.location.href = `./game.html?${params.toString()}`;
+		  window.location.href = `./game.html?${params.toString()}`;
         }
     </script>
 </body>

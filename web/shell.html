@@ -221,17 +221,9 @@ jwE50AGjLCVuS8Yt4H7OgZLKK5EKOsLviEWJSL/+0uMi7gLUSBseYwqEbXvSHCec1CJvZPyHCmYQffaB
 	  var urlParams = new URLSearchParams(window.location.search);
 	  var args = [];
 
-	  if (urlParams.has('max-score')) {
-		  args.push('-s');
-		  args.push(urlParams.get('max-score'));
-	  }
-	  if (urlParams.has('player-speed')) {
-		  args.push('-p');
-		  args.push(urlParams.get('player-speed'));
-	  }
-	  if (urlParams.has('mode')) {
-		  args.push('-m');
-		  args.push(urlParams.get('mode'));
+	  for (const [key, value] of urlParams){
+		  args.push(`--${key}`);
+		  args.push(value);
 	  }
 	  console.log(args);
       var Module = {
