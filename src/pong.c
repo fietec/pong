@@ -75,10 +75,10 @@ void update_text(void)
     } else{
         if (game.max_score){
             snprintf(game.player1.score_buf, sizeof(game.player1.score_buf), "Score: %zu Wins: %zu", game.player1.score, game.player1.wins);
-            snprintf(game.player2.score_buf, sizeof(game.player2.score_buf), "Score: %zu Wins: %zu", game.player2.score, game.player2.wins); 
+            snprintf(game.player2.score_buf, sizeof(game.player2.score_buf), "Score: %zu Wins: %zu", game.player2.score, game.player2.wins);
         } else{
             snprintf(game.player1.score_buf, sizeof(game.player1.score_buf), "Score: %zu", game.player1.score);
-            snprintf(game.player2.score_buf, sizeof(game.player2.score_buf), "Score: %zu", game.player2.score); 
+            snprintf(game.player2.score_buf, sizeof(game.player2.score_buf), "Score: %zu", game.player2.score);
         }
     }
     game.score2_x = WIDTH - MeasureText(game.player2.score_buf, FONT_SIZE) - 10;
@@ -114,9 +114,9 @@ void update_frame(void)
     // Player-Wall Collision
     if (game.player1.rect.y < 0) game.player1.rect.y = 0;
     if (game.player1.rect.y > HEIGHT-game.player1.rect.height) game.player1.rect.y = HEIGHT-game.player1.rect.height;
-    if (game.player2.rect.y < 0) game.player2.rect.y = 0;    
+    if (game.player2.rect.y < 0) game.player2.rect.y = 0;
     if (game.player2.rect.y > HEIGHT-game.player2.rect.height) game.player2.rect.y = HEIGHT-game.player2.rect.height;
-    
+
     if (!game.paused){
         // Ball Movement
         game.ball.rect.x += game.ball.vel.x * dt;
@@ -133,7 +133,7 @@ void update_frame(void)
             game.ball.rect.y = HEIGHT-game.ball.rect.height - 1;
             game.ball.vel.y *= -1;
         }
-        // Left Wall   
+        // Left Wall
         if (game.ball.rect.x <= 0){
             game.ball.rect.x = WIDTH/2-game.ball.rect.width/2;
             game.ball.rect.y = HEIGHT/2-game.ball.rect.height/2;
@@ -205,12 +205,12 @@ void update_frame(void)
     BeginDrawing();
     {
         ClearBackground(GetColor(0x181818FF));
-            
+
         // Center Line
         for (int i=0; i<HEIGHT; i += 40) {
             DrawRectangle(WIDTH / 2 - 2, i+10, 4, 20, DARKGRAY);
         }
-         
+
         DrawRectangleRec(game.ball.rect, RED);
         DrawRectangleRec(game.player1.rect, WHITE);
         if (game.mode != Singleplayer){
@@ -254,7 +254,7 @@ int main(int argc, char *argv[])
         clags_flag_help_config(&help),
     };
     clags_config_t config = clags_config(args);
-    
+
     clags_config_t *failed = clags_parse(argc, argv, &config);
     if (failed){
         clags_usage(argv[0], failed);
@@ -264,10 +264,10 @@ int main(int argc, char *argv[])
         clags_usage(argv[0], help);
         return 0;
     }
-    
+
     game.mode              = clags_choice_index(&choices, pmode);
     game.max_score         = (size_t) max_score;
-    
+
     game.ball.vel          = (Vector2){-(float)ball_x_speed, (float)GetRandomValue(-RANDOM_START_VEL, RANDOM_START_VEL)};
     game.ball.init_x_vel   = (float) ball_x_speed;
     game.ball.delta_x_vel  = (float) ball_speedup;
@@ -277,7 +277,7 @@ int main(int argc, char *argv[])
     game.player1.max_vel   = game.player2.max_vel   = (float) player_max_speed;
     game.player1.delta_vel = game.player2.delta_vel = (float) player_speedup;
     game.player1.slip_vel  = game.player2.slip_vel  = (float) player_slippiness;
-    
+
     InitWindow(WIDTH, HEIGHT, "Pong");
     SetTargetFPS(60);
     SetRandomSeed(time(NULL));

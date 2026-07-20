@@ -6,7 +6,8 @@ CC = cc
 EMCC = emcc
 
 CFLAGS = -Wall -I./raylib
-LDFLAGS = -L./raylib -lraylib -lm -lpthread -ldl -lrt -lX11
+LDFLAGS = -L./raylib -lraylib.linux -lm -lpthread -ldl -lrt -lX11
+WINLDFLAGS = -Llib -L./raylib -lraylib.win -lgdi32 -lwinmm
 
 WEBLDFLAGS = -L./raylib -lraylib.web \
              -s USE_GLFW=3 \
@@ -14,8 +15,11 @@ WEBLDFLAGS = -L./raylib -lraylib.web \
              -DPLATFORM_WEB \
              --shell-file web/shell.html
 
-$(TARGET): $(SRCS)
+linux: $(SRCS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) $(LDFLAGS)
+
+win: $(SRCS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) $(WINLDFLAGS)
 
 web: $(SRCS)
 	$(EMCC) $(CFLAGS) -o web/game.html $(SRCS) $(WEBLDFLAGS)
